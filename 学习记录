@@ -1,0 +1,366 @@
+方法递归调用
+基本介绍
+简单的说：递归就是方法自己调用自己，每次调用时传入不同的变量。递归有助于编程者解决复杂问题，同时可以让代码变得简洁
+递归能解决什么问题？
+1.各种数学问题如：8皇后问题，汉诺塔，阶乘问题，迷宫问题，球和篮子的问题（google编程大赛）
+2.各种算法中也会使用到递归，比如快排，归并排序，二分查找，分治算法等。
+3.将用栈解决问题-->递归代码比较简洁
+
+方法递归调用
+八皇后
+是一个古老而著名的问题，是回溯算法的典型案例。该问题是国际西洋棋骑手马克斯，贝瑟尔1848年提出：在8*8格的国际象棋上摆放八个皇后，使其不能互相攻击，即：任意两个皇后都不嫩处于同一行、同一列或统一斜线上，问有多少种摆法？
+递归调用recursion
+列举两个小案例
+打印问题
+阶乘问题
+
+class recursion{
+	public static void main(String[] args) {
+		T t1 = new T();
+		t1.test(4);//输出
+	}
+}
+class T{
+	public void test(int n){
+		if(n < 2){
+		  
+		   		test(n -1);
+                  System.out.println("n=" + n);
+		   		
+		   	}	
+			//假如 添加else{ 	System.out.println("n=" + n);	}只会输出2 3 4  到达2以后会回到之前步骤
+		
+	}
+}
+方法递归调用
+阶乘factorial
+
+class recursion{
+	public static void main(String[] args) {
+		T t1 = new T();
+		t1.test(4);//输出
+		t1.factorial(5);
+		int res = t1.factorial(5);
+		System.out.println("res=" + res);
+	}
+}
+class T{
+	public void test(int n){
+		if(n < 2){
+		  
+		   		test(n -1);
+                
+		   		
+		   	}	  System.out.println("n=" + n);
+			//假如 添加else{ 	System.out.println("n=" + n);	}只会输出
+		
+	}
+	public int factorial(int n){
+		if (n == 1) {
+			return 1;
+			
+		}else{
+			return factorial(n - 1)*n;
+		}
+	}
+}
+结果解释：
+1.n= 5 - >  factorial(5 - 1)* 5
+2.n= 4 -> factorial(4 - 1)*4
+3.n=3  -> factorial(3- 1)*3
+4. n = 2  ->factorial(2-1)*2
+5. n= 1    -》return  1
+6.n = 2 factorial（2 - 1）= 1     f(1)*2=2
+7 n=  3 .factorial (3-1)=2            f(2)*3=6
+8. n = 4  factorial(4-1)=6             f(3)*4=24
+9 n = 5   .factorial(5-1)=24       f(4)*5 = 120
+
+res = factorial(5) = 120
+
+方法递归调用
+递归重要规则
+1.执行一个方法时，就创建一个新的受保护的独立空间（栈空间）
+2.方法的局部变量是独立的，不会相互影响，比如n变量
+3.如果方法中使用的是引用类型变量（比如数组），就会共享该引用类型的数据。
+4.递归必须向退出递归的条件逼近，否则就是无限递归，出现StackOverflowError，死鬼
+5.当一个方法执行完毕，或者遇到return，就会返回，遵守谁调用，就将结果返回给谁，同时当方法执行完毕或者返回时，该方法也就执行完毕。
+
+
+
+
+
+
+class recursion{
+	public static void main(String[] args) {
+	//使用递归的方式求出斐波那契数1,1,2,3,5,8,13...给你一个整数n，求出它的值是多少
+    //当n= 1  ===1
+    //当n= 2  ===1
+	//当n >= 3 ===前面两个数之和
+	//这里就是一个递归的思路
+		
+
+	T test = new T();
+	int n= 7;
+	int res = test.fibonacci(n);
+	if (res != -1) {
+		System.out.println("当n"+ n + "对应的fibonacci="+ res);
+		
+	}
+	
+	}
+}
+class T{
+	public int fibonacci(int n){
+	if (n>=1) {
+		
+	
+	   if (n==1||n==2) {
+             return 1;，在递归中的return ；表示把控制权交给上一级，回答问题
+
+	    }else{
+		return fibonacci(n - 1) + fibonacci(n - 2);，在递归中的return ；表示把控制权交给上一级，一级一级往回推，也就是递归，最终算出fibonacci（n）的值
+		
+	     }
+	}else{
+		System.out.println("要求输入的n>=1的整数");
+		return -1;，在递归中的return ；表示把控制权交给上一级，
+	}
+	
+}
+}
+
+
+迭代方式解决：
+
+public class RecursionExercise01{
+	public static void main(String[] args) {
+		
+//猴子吃桃子问题：有一堆桃子，猴子第一天吃了其中的一半，并再多吃了一个，以后每天猴子都吃其中的一半，然后再多吃一个。
+//逆推法：1.day = 10 时 有1个桃子； 
+// 2.day = 9 时 有(day10 +1 )*2=4
+//3. day = 8 时 有（day9 + 1）*2 = 10
+//4.规律就是 前一天的桃子 = （后一天的桃子 + 1）*2
+//5.递归
+
+
+
+    int day = 1;
+		HouZi houzi = new HouZi();
+		int peachNum = houzi.peach(day);
+		if (peachNum != -1) {
+			System.out.println("第" + day + "天有" + peachNum + "个桃子");
+			
+		}
+		
+
+	}
+}
+class HouZi{
+	public int peach(int day){
+        
+       if (day == 10) {
+          return 1;//只有一个桃       	
+       }else if(day >= 1&& day <= 9){
+       	return (peach(day +1) + 1)* 2;
+
+       }else{
+         System.out.println("day在1-10");
+         return -1;
+       }
+        
+          	
+          
+         } 
+	}
+
+
+
+方法递归调用
+递归调用应用实例
+1.小球得到的路径，和程序员设置的找路策略有关：找路的上下左右的顺序相关
+2.再得到小球路径时，可以先使用（下右上左），再改成（上右下左），看看路径是不是有变化
+3.测试回溯现象
+4.扩展思考：如何求出最短路径？
+1 1 1 1 1 1 1
+1 0 0 0 0 0 1
+1 0 0 0 0 0 1
+1 1 1 0 0 0 1
+1 0 0 0 0 0 1
+1 0 0 0 0 0 1
+1 0 0 0 0 0 1
+1 1 1 1 1 1 1
+当前地图情况
+1 1 1 1 1 1 1
+1 2 2 2 2 2 1
+1 0 0 0 0 2 1
+1 1 1 0 0 2 1
+1 0 0 0 0 2 1
+1 0 0 0 0 2 1
+1 0 0 0 0 2 1
+1 1 1 1 1 1 1
+
+
+
+
+
+
+
+
+
+class MiGong{
+	public static void main(String[] args) {
+		//思路
+		//1.先创建迷宫，用二维数组表示 int【】【】 map = new int 【8】【7】
+		//2.先规定 map 数组的元素值：0 表示可以走 1 表示障碍物
+		int[][] map = new int [8][7];
+		//3.将最上面的一行和最下面的一行，全部设置为1
+		for (int i = 0; i < 7;i++ ) {
+           map[0][i] = 1;
+           map[7][i] = 1;			
+		}
+		//输出当前的地图
+		//4.将右面的一列和最左边的一列，全部设置为1
+		for (int i = 0;i < 8 ;i++ ) {
+              map[i][0] = 1;
+              map[i][6] = 1;			
+		}
+		map[3][1] = 1;
+		map[3][2] = 1;
+		System.out.println("当前地图情况");
+		for (int i =0; i < map.length;i++ ) {
+			for (int j =0; j < map[i].length; j++) {
+				 System.out.print(map[i][j] + " ");
+
+			}
+			System.out.println(" ");
+		}
+		//使用findWay给老鼠带路
+		T migong = new T();
+		migong.findWay(map,1,1);//初始位置
+		System.out.println("当前地图情况");
+		for (int i =0; i < map.length;i++ ) {
+			for (int j =0; j < map[i].length; j++) {
+				 System.out.print(map[i][j] + " ");
+
+			}
+			System.out.println(" ");
+		}
+	}
+}
+class T {
+	//使用递归回溯的思想来解决老鼠出迷宫,
+	//1.findWay方法就是专门来找出迷宫的路径
+	//2.如果找到，就返回true，否则返回false
+	//3.map就是二维数组，即表示迷宫
+	//4. i,j 就是老鼠的位置，初始化的位置为（1,1）
+	//5.因为我们是递归的找路，所以我先规定 map 数组的各个值的含义
+	//6.0 表示可以走 1 表示障碍物 2 表示是可以走 3 表示走过，但是走不通
+	//当map【6】【5】 =2 就说明找到通路，就可以结束，否则就继续找 
+	//先确定老鼠找路策略
+	public boolean findWay(int[][]map,int i, int j){
+                                      
+                           if (map[6][5] == 2) {//表明表示可以走
+                                  return true;                                   		
+                          	}else {
+                          		if(map[i][j]==  0){//当前这个位置0，说明表示可以走
+	                          			//我们假定可以走通
+	                          			map[i][j] = 2;
+	                          			//使用找路策略，来确定该位置是否真的可以走通
+	                          		if(findWay(map,i-1,j)){//上
+	                          		    return true;
+	                          		}else if(findWay(map,i,j+1)){//右
+	                          			return true;
+	                          		}else if (findWay(map,i+1,j)){//下
+	                          			return true;
+	                          		}else if (findWay(map,i,j-1)){//左
+	                          			return true;
+	                          		}else{
+	                          			map[i][j] = 3;
+	                          			return false;	
+	                          	    }
+                          		
+                                  
+                          	     }else{//map[i][j] = 1,2,3
+                          		
+                          		return false;
+                          	}
+                          }
+                      }
+                      }
+方法递归调用
+汉诺塔
+大凡天创造世界的时候做了3根金刚石柱子，在一根柱子上从下往上按照大小顺序螺着64片圆盘，大凡天命令所罗门把圆盘从下面开始按大小顺序重新摆放在另一根柱子上。并且规定，在小圆盘上不能放大圆盘，在三根柱子之间一次只能移动一个圆盘。
+假如每秒钟移动一次，共需多长时间呢？移完这些金片需要5845.54亿年以上，太阳系的预期寿命据说也就是数百亿年。真的过了5845.54亿年，地球上的一切声明，连通樊塔，庙宇等，都早已经灰飞烟灭。          
+                		
+                          	
+                          
+
+           
+public class HanNuoTa{
+    public static void main(String[] args) {
+       Tower tower = new Tower();
+       tower.move(5,'A','B','C') ;
+    }
+}
+class Tower{
+    //方法
+    //num表示要移动的个数,a，b，c分别表示A塔，B塔，C塔
+    public void move(int num, char a, char b,char c){//形参 abc 不是固定对应，实参ABC三根
+        //柱子，而是“起始”，“过度”，“终点”三根柱子。
+        //2.“起始”，“过度”，“终点”是形参。
+        //3.不同情况下 我们的起始 过度 终点是不同的
+        //4. else 代码块中的内容：4.0 起始问题 A上的 num 挪到 C ，BC为空  可以任意挪动
+        //如果只有一个盘 num = 1，
+        //4.1  A上面的一摞（num-1）挪到 B ，所以  '起始'=A 、'过度'=C、 '终点'=B。4.2 不解释 常规 A(底下&最大) ->C
+        //4.2 不解释 常规 A(底下&最大) ->C.4.3 B上面的一摞（num-1）挪回  A , 所以 '起始'=B 、'过度'=C、 '终点'=A
+        //5.0 （num-1）挪回 A 之后，之前A最底下的  已经挪到C 最底下了
+        if (num == 1) {
+                  System.out.println(a + " =>" + c);            
+        }else{
+            
+           //如果有多个盘，可以看成两个，最下面的和上面的所有盘（num -1） 
+            //1，先移动上面所有的盘到b， 借助c
+            move(num - 1,a,c,b);
+            //2.把最下面的这个盘，移动到c
+             System.out.println(a + " =>" + c + num);     
+             //3.再把b塔的所有盘，移动到c，借助a
+             move(num - 1, b,a,c);
+    }
+        }
+}	
+
+A =>C
+A =>B2
+C =>B
+A =>C3
+B =>A
+B =>C2
+A =>C
+A =>B4
+C =>B
+C =>A2
+B =>A
+C =>B3
+A =>C
+A =>B2
+C =>B
+A =>C5
+B =>A
+B =>C2
+A =>C
+B =>A3
+C =>B
+C =>A2
+B =>A
+B =>C4
+A =>C
+A =>B2
+C =>B
+A =>C3
+B =>A
+B =>C2
+A =>C
+
+
+
+
